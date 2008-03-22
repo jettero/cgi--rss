@@ -6,7 +6,8 @@ use strict;
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
-    'NAME'         => 'CGI::RSS',
-    'VERSION_FROM' => 'RSS.pm',
-  # 'PREREQ_PM'    => { CGI => 0 },
+    NAME         => 'CGI::RSS',
+    VERSION_FROM => 'RSS.pm',
+    clean        => { FILES => "test.xml" },
+  # PREREQ_PM    => { CGI => 0 },
 );
