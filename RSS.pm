@@ -4,9 +4,18 @@ package CGI::RSS;
 use strict;
 use base 'CGI';
 
+# TODO: this collection of tag names is hardly "correct"
 our @TAGS = qw(
-    rss channel titlte item description date link
-    image url copyright generator
+    rss channel item
+
+    title link description
+
+    language copyright managingEditor webMaster pubDate lastBuildDate category generator docs
+    cloud ttl image rating textInput skipHours skipDays
+
+    link description author category comments enclosure guid pubDate source
+
+    date url
 );
 
 1;
@@ -53,7 +62,7 @@ sub begin_rss {
 sub finish_rss {
     my $this = shift;
 
-    return $this->end_rss;
+    return $this->end_channel, $this->end_rss;
 }
 
 __END__
