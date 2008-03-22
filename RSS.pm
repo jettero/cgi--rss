@@ -4,7 +4,7 @@ package CGI::RSS;
 use strict;
 use base 'CGI';
 
-our $VERSION = 0.007_000;
+our $VERSION = '0.7.0';
 
 # TODO: this collection of tag names is hardly "correct" or complete
 our @TAGS = qw(
@@ -112,6 +112,14 @@ have any suggestions on how to handle this, please let me know.
 I had considered writing a CGI::RSS::_make_tag_func() that
 converts the ':' to a '_' in the function name...  That's harder
 than it sounds so I let it go for now.
+
+=head1 TODO
+
+I just wanted to get this thing working for now, but I'm not proud
+of the module. In the future, I'd like to actually follow a standard.
+
+ 1. conform to standard(s) if possible
+ 2. deal with xmlns somehow
 
 =head1 AUTHOR
 
