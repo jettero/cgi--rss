@@ -4,22 +4,45 @@ package CGI::RSS;
 use strict;
 use base 'CGI';
 
+our @TAGS = qw(
+    rss channel titlte item description date link
+    image url copyright generator
+);
+
 1;
 
-our @TAGS = qw( channel titlte item description date link rss );
+sub make_tags {
+    # NOTE: This tricks CGI.pm into thinking these are valid html tags...
+    #       We do this at header() time so you can add your own.
+    #       e.g.: push @CGI::RSS::TAGS, "mytag";
+
+    # XXX: The construction of CGI.pm's _make_tag_func() rule's out namespaces
+    # (like push @CGI::RSS::TAGS, "myns:mytag"), if you have any suggestions
+    # for this, please let me know.  I had considered writing a cgi::rss
+    # version that converts the ':' to a '_' in the function name...  That's
+    # harder than it sounds so I let it go for now.
+
+    $CGI::EXPORT{$_} = 1 for @TAGS;
+}
 
 sub header {
     my $this = shift;
+
+    &make_tags;
+
     return $this->SUPER::header("application/xml") . "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n";
 }
 
-sub start_rss {
+sub begin_rss {
     my $this = shift;
     my $opts = $_[0];
        $opts = {@_} unless ref $opts;
 
+    # NOTE: This isn't nearly as smart as CGI.pm's argument parsing... 
+    # I assume I could call it, but but I'm only mortal.
+
     my $ver = $opts->{version} || "2.0";
-    my $ret = qq(<rss version="$ver">);
+    my $ret = $this->start_rss({version=>$ver});
        $ret .= $this->start_channel;
        $ret .= $this->link($opts->{link})   if exists $opts->{link};
        $ret .= $this->title($opts->{title}) if exists $opts->{title};
@@ -27,7 +50,11 @@ sub start_rss {
     return $ret;
 }
 
-sub end_rss { "</rss>" }
+sub finish_rss {
+    my $this = shift;
+
+    return $this->end_rss;
+}
 
 __END__
 # Below is stub documentation for your module. You better edit it!
@@ -48,11 +75,16 @@ __END__
     # of making you print each element individually, they work as arguments.
 
     print $rss->header;
-    print $rss->start_rss(title=>"My Feed!", link=>"http://localhost/directory");
+    print $rss->begin_rss(title=>"My Feed!", link=>"http://localhost/directory");
     while( my $h = $sth->fetchrow_hashref ) {
-        print $rss->item(title=>$h->{title}, link=>$h->{link}, desc=>$h->{desc}, date=>$h->{date})
+        print $rss->item(
+            $rss->title       ( $h->{title} ),
+            $rss->link        ( $h->{link}  ),
+            $rss->description ( $h->{desc}  ),
+            $rss->date        ( $h->{date}  ),
+        );
     }
-    print $rss->end_rss;
+    print $rss->finish_rss;
 
 =head1 AUTHOR
 
