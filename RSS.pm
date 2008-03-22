@@ -4,7 +4,9 @@ package CGI::RSS;
 use strict;
 use base 'CGI';
 
-# TODO: this collection of tag names is hardly "correct"
+our $VERSION = 0.007_000;
+
+# TODO: this collection of tag names is hardly "correct" or complete
 our @TAGS = qw(
     rss channel item
 
@@ -21,16 +23,6 @@ our @TAGS = qw(
 1;
 
 sub make_tags {
-    # NOTE: This tricks CGI.pm into thinking these are valid html tags...
-    #       We do this at header() time so you can add your own.
-    #       e.g.: push @CGI::RSS::TAGS, "mytag";
-
-    # XXX: The construction of CGI.pm's _make_tag_func() rule's out namespaces
-    # (like push @CGI::RSS::TAGS, "myns:mytag"), if you have any suggestions
-    # for this, please let me know.  I had considered writing a cgi::rss
-    # version that converts the ':' to a '_' in the function name...  That's
-    # harder than it sounds so I let it go for now.
-
     $CGI::EXPORT{$_} = 1 for @TAGS;
 }
 
@@ -74,14 +66,12 @@ __END__
 
 =head1 SYNOPSIS
 
+    use strict;
     use CGI::RSS;
 
-    my $rss = new CGI::RSS;
     # NOTE: This doesn't work either way like CGI.pm, it's only OO...
 
-    # As you can see, this differs slightly from the spirit of CGI.pm.
-    # Like most XML formats, RSS is even less convenient than HTML, so instead
-    # of making you print each element individually, they work as arguments.
+    my $rss = new CGI::RSS;
 
     print $rss->header;
     print $rss->begin_rss(title=>"My Feed!", link=>"http://localhost/directory");
@@ -94,6 +84,34 @@ __END__
         );
     }
     print $rss->finish_rss;
+
+=head1 TAGS
+
+=head2 RSS TAGS
+
+The following tags work anywhere.  There is no enforcement for
+where they belong.  They're just tag functions.
+
+    rss channel item title link description language copyright
+    managingEditor webMaster pubDate lastBuildDate category
+    generator docs cloud ttl image rating textInput skipHours
+    skipDays link description author category comments enclosure
+    guid pubDate source date url
+
+=head2 MORE TAGS
+
+RSS.pm tricks CGI.pm into thinking the above tags are are valid
+html tags.  It does this at run time so you can add your own.
+
+    push @CGI::RSS::TAGS, "mytagname";
+
+The construction of CGI.pm's _make_tag_func() rule's out
+namespaces (e.g., push @CGI::RSS::TAGS, "myns:mytag"), if you
+have any suggestions on how to handle this, please let me know.
+
+I had considered writing a CGI::RSS::_make_tag_func() that
+converts the ':' to a '_' in the function name...  That's harder
+than it sounds so I let it go for now.
 
 =head1 AUTHOR
 
@@ -109,4 +127,4 @@ Copyright (c) 2007 Paul Miller -- LGPL [attached]
 
 =head1 SEE ALSO
 
-Term::Size, Term::ANSIColor, Term::ANSIScreen
+CGI
