@@ -5,7 +5,7 @@ use strict;
 use base 'CGI';
 
 use version;
-our $VERSION = qv('0.7.1');
+our $VERSION = qv('0.7.2');
 
 # TODO: this collection of tag names is hardly "correct" or complete
 our @TAGS = qw(
