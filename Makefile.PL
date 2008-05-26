@@ -9,5 +9,5 @@ WriteMakefile(
     NAME         => 'CGI::RSS',
     VERSION_FROM => 'RSS.pm',
     clean        => { FILES => "test.xml" },
-  # PREREQ_PM    => { CGI => 0 },
+    PREREQ_PM    => { version => 0 },
 );
