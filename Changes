@@ -1,3 +1,6 @@
+0.9: Thu Aug  7 15:53:52 EDT 2008
+   - ditched version.pm
+
 0.7.3: Tue May 27 12:03:32 EDT 2008
    - (wow, use version has to be on the same line as our $VERSION
       for older EUMM)
