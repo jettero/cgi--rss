@@ -1,3 +1,6 @@
+0.92: Thu Mar 26 12:00:54 EDT 2009
+   - messed up the META.yml
+
 0.91: Thu Mar 26 08:52:39 EDT 2009
    - ditching the lgpl2 gz file for the new meta
    - added chrony's meta.yml stuff

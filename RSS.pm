@@ -4,7 +4,7 @@ package CGI::RSS;
 use strict;
 use base 'CGI';
 
-our $VERSION = 0.91;
+our $VERSION = 0.92;
 
 # TODO: this collection of tag names is hardly "correct" or complete
 our @TAGS = qw(
