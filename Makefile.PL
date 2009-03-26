@@ -14,7 +14,7 @@ WriteMakefile(
             META_MERGE => {
                 keywords => ['pcap', 'sniffer'],
                 resources=> {
-                    repository => 'http://github.com/jettero/net--pcap--easy/tree',
+                    repository => 'http://github.com/jettero/cgi--rss/tree',
                 },
             },
 
