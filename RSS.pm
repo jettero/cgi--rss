@@ -4,7 +4,7 @@ package CGI::RSS;
 use strict;
 use base 'CGI';
 
-our $VERSION = 0.8;
+our $VERSION = 0.91;
 
 # TODO: this collection of tag names is hardly "correct" or complete
 our @TAGS = qw(
@@ -131,7 +131,7 @@ all.  Half the fun of releasing this stuff is knowing that people use it.
 
 =head1 COPYRIGHT
 
-Copyright (c) 2007 Paul Miller -- LGPL [attached]
+Copyright (c) 2009 Paul Miller -- LGPL
 
 =head1 SEE ALSO
 

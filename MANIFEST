@@ -3,7 +3,6 @@ t/01_load_them.t
 MANIFEST
 README
 example.xml
-lgpl-2.1.txt.gz
 t/02_xmllint.t
 Makefile.PL
 Changes
