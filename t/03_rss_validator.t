@@ -13,7 +13,7 @@ if( eval "use WWW::Mechanize; 1;" ) {
        $xml =~ s/^.+$//m; # the first line is the content type (for apache)
        $xml =~ s/^[\x0d\x0a]+//; # then some blank lines
 
-    $xml .= $rss->begin_rss(title=>"My Feed!", link=>"http://localhost/directory");
+    $xml .= $rss->begin_rss(title=>"My Feed!", link=>"http://localhost/directory", desc=>"blargorious comments!");
     $xml .= $rss->item(
         $rss->title       ( "test title"                ),
         $rss->link        ( "http://url/url/"           ),

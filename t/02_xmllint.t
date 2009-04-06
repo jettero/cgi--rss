@@ -22,7 +22,7 @@ if( $lint ) {
 
   # print
     $rss->header;
-    print $out $rss->begin_rss(title=>"My Feed!", link=>"http://localhost/directory");
+    print $out $rss->begin_rss(title=>"My Feed!", link=>"http://localhost/directory", desc=>"blargorious comment!");
 
         print $out $rss->item(
             $rss->title       ( "test title"                ),

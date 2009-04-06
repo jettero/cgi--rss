@@ -69,8 +69,9 @@ sub begin_rss {
     my $ver = $opts->{version} || "2.0";
     my $ret = $this->start_rss({version=>$ver});
        $ret .= $this->start_channel;
-       $ret .= $this->link($opts->{link})   if exists $opts->{link};
-       $ret .= $this->title($opts->{title}) if exists $opts->{title};
+       $ret .= $this->link($opts->{link})        if exists $opts->{link};
+       $ret .= $this->title($opts->{title})      if exists $opts->{title};
+       $ret .= $this->description($opts->{desc}) if exists $opts->{desc};
 
     return $ret;
 }

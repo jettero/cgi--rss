@@ -5,6 +5,8 @@
    - taught CGI::RSS to preserve case on tags (involved
      deparse... blech)
    - fixed a bug in finish_rss
+   - apparently, to validate, an RSS channel needs a
+     description...
 
 0.92: Thu Mar 26 12:00:54 EDT 2009
    - messed up the META.yml
