@@ -3,8 +3,9 @@ package CGI::RSS;
 
 use strict;
 use base 'CGI';
+use Date::Manip;
 
-our $VERSION = 0.92;
+our $VERSION = 0.95;
 
 # TODO: this collection of tag names is hardly "correct" or complete
 our @TAGS = qw(
@@ -17,13 +18,23 @@ our @TAGS = qw(
 
     link description author category comments enclosure guid pubDate source
 
-    date url
+    pubDate url
 );
 
 1;
 
 sub make_tags {
     $CGI::EXPORT{$_} = 1 for @TAGS;
+}
+
+sub date {
+    my $this = shift;
+    if( my $pd = &ParseDate($_[-1]) ) {
+        my $rfc822_date = &UnixDate($pd, '%a, %d %b %Y %H:%M:%S %Z');
+        return $this->pubDate($rfc822_date);
+    }
+
+    $this->pubDate(@_);
 }
 
 sub header {
