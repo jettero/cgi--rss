@@ -7,3 +7,4 @@ example.xml
 t/02_xmllint.t
 Makefile.PL
 Changes
+t/03_rss_validator.t
