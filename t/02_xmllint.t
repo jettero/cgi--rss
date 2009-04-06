@@ -20,6 +20,8 @@ for my $p (map {"$_/xmllint"} @path) {
 if( $lint ) {
     open my $out, ">test.xml" or die $!;
 
+    print STDERR "[checking xml with xmllint]\n";
+
   # print
     $rss->header;
     print $out $rss->begin_rss(title=>"My Feed!", link=>"http://localhost/directory", desc=>"blargorious comment!");

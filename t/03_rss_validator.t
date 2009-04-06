@@ -28,10 +28,12 @@ if( eval "use WWW::Mechanize; 1;" ) {
    print $xmlfh $xml;
    close $xmlfh;
 
-   if( $ENV{SKIP_W3} ) {
+   if( not -f "w3.ok" ) {
         skip(1,1);
 
    } else {
+       print STDERR "[submitting sample rss to w3]\n";
+
        my $mech = new WWW::Mechanize;
           $mech->get("http://validator.w3.org/feed/#validate_by_input");
           $mech->submit_form(
