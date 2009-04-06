@@ -4,7 +4,11 @@ use CGI::RSS;
 my $rss = new CGI::RSS;
 
 print $rss->header;
-print $rss->begin_rss(title=>"My Feed!", link=>"http://localhost/directory");
+print $rss->begin_rss(
+    title => "My Feed!",
+    link  => "http://localhost/directory",
+    desc  => "My feed is cool!");
+
 while( my $h = $sth->fetchrow_hashref ) {
     print $rss->item(
         $rss->title       ( $h->{title} ),
@@ -13,4 +17,5 @@ while( my $h = $sth->fetchrow_hashref ) {
         $rss->date        ( $h->{date}  ),
     );
 }
+
 print $rss->finish_rss;
