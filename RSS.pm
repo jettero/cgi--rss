@@ -4,8 +4,21 @@ package CGI::RSS;
 use strict;
 use base 'CGI';
 use Date::Manip;
+use B::Deparse;
 
 our $VERSION = 0.95;
+
+BEGIN {
+    # NOTE: there's voodoo in this block, don't judge me. :(
+
+    my $deparse = B::Deparse->new("-p", "-sC");
+    my $deparsed = $deparse->coderef2text(\&CGI::_make_tag_func);
+
+    $deparsed =~ s/\\[LE]//g; # instruct CGI.pm to *not* ruin the case of (eg) pubDate
+
+    my $sub = eval "sub $deparsed" or die $@;
+    do { no warnings 'redefine'; *CGI::_make_tag_func = $sub; }
+}
 
 # TODO: this collection of tag names is hardly "correct" or complete
 our @TAGS = qw(
@@ -67,3 +80,5 @@ sub finish_rss {
 
     return $this->end_channel, $this->end_rss;
 }
+
+"This file is true."

@@ -2,6 +2,8 @@
    - split the pod to a separate file
    - my rss does not validate...
    - added Date::Manip RFC822 date reformatting
+   - taught CGI::RSS to preserve case on tags (involved
+     deparse... blech)
 
 0.92: Thu Mar 26 12:00:54 EDT 2009
    - messed up the META.yml

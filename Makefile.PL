@@ -10,6 +10,7 @@ WriteMakefile(
     VERSION_FROM => 'RSS.pm',
     'PREREQ_PM'     => {
         'Date::Manip' => 0,
+        'B::Deparse'  => 0,
     },
 
     ($ExtUtils::MakeMaker::VERSION ge '6.48'? 
