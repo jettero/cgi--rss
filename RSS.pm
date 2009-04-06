@@ -78,7 +78,7 @@ sub begin_rss {
 sub finish_rss {
     my $this = shift;
 
-    return $this->end_channel, $this->end_rss;
+    return $this->end_channel . $this->end_rss;
 }
 
 "This file is true."
