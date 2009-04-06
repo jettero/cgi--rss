@@ -10,7 +10,7 @@ my $rss = new CGI::RSS;
 
 my @path = split ":", $ENV{PATH};
 my $lint;
-for my $p (map {"$_/pxmllint"} @path) {
+for my $p (map {"$_/xmllint"} @path) {
     if( -x $p ) {
         $lint = $p;
         last;
