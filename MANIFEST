@@ -1,4 +1,5 @@
 RSS.pm
+RSS.pod
 t/01_load_them.t
 MANIFEST
 README

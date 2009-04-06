@@ -1,3 +1,6 @@
+0.95: Mon Apr  6 11:06:15 EDT 2009
+   - split the pod to a separate file
+
 0.92: Thu Mar 26 12:00:54 EDT 2009
    - messed up the META.yml
 
