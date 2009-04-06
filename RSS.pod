@@ -17,7 +17,8 @@
         print $rss->item(
             $rss->title       ( $h->{title} ),
             $rss->link        ( $h->{link}  ),
-            $rss->description ( $h->{desc}  ),
+            $rss->guid        ( $h->{link}  ), # unique identifier, usually
+            $rss->description ( $h->{desc}  ), #   a permalink
             $rss->date        ( $h->{date}  ), # does rfc822 date processing
         );
     }
