@@ -28,18 +28,23 @@ if( eval "use WWW::Mechanize; 1;" ) {
    print $xmlfh $xml;
    close $xmlfh;
 
-   my $mech = new WWW::Mechanize;
-      $mech->get("http://validator.w3.org/feed/#validate_by_input");
-      $mech->submit_form(
-          form_number => 2,
-          fields => { rawdata => $xml },
-      );
+   if( $ENV{SKIP_W3} ) {
+        skip(1,1);
 
-   open my $w3, ">w3-validator-result.html" or die $!;
-   print $w3 $mech->content;
-   close $w3;
+   } else {
+       my $mech = new WWW::Mechanize;
+          $mech->get("http://validator.w3.org/feed/#validate_by_input");
+          $mech->submit_form(
+              form_number => 2,
+              fields => { rawdata => $xml },
+          );
 
-   ok( $mech->content =~ m/This is a valid RSS feed\./ );
+       open my $w3, ">w3-validator-result.html" or die $!;
+       print $w3 $mech->content;
+       close $w3;
+
+       ok( $mech->content =~ m/This is a valid RSS feed\./ );
+   }
 
 } else {
     skip(1,1);
