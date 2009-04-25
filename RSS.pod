@@ -1,6 +1,6 @@
 =head1 NAME
 
-    CGI::RSS - provides a CGI-like interface for making rss feeds
+CGI::RSS - provides a CGI-like interface for making rss feeds
 
 =head1 SYNOPSIS
 
