@@ -6,7 +6,7 @@ use base 'CGI';
 use Date::Manip;
 use B::Deparse;
 
-our $VERSION = 0.9501;
+our $VERSION = '0.9600';
 
 BEGIN {
     # NOTE: there's voodoo in this block, don't judge me. :(
