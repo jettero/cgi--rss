@@ -29,5 +29,5 @@ WriteMakefile(
         LICENSE	=> 'lgpl2',
     ) : ()),
 
-    clean => { FILES => "test.xml" },
+    clean => { FILES => "test.xml w3-validator-result.* w3.ok" },
 );
