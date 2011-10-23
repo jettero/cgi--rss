@@ -1,0 +1,17 @@
+MYMETA.json
+MYMETA.yml
+Makefile
+blib/arch/.exists
+blib/arch/auto/CGI/RSS/.exists
+blib/bin/.exists
+blib/lib/CGI/.exists
+blib/lib/CGI/RSS.pm
+blib/lib/CGI/RSS.pod
+blib/lib/auto/CGI/RSS/.exists
+blib/man1/.exists
+blib/man3/.exists
+blib/man3/CGI::RSS.3
+blib/script/.exists
+pm_to_blib
+test.xml
+w3-validator-input.xml
