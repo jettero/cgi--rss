@@ -48,8 +48,8 @@ sub make_tags {
 
 sub date {
     my $this = shift;
-    if( my $pd = &ParseDate($_[-1]) ) {
-        my $rfc822_date = &UnixDate($pd, '%a, %d %b %Y %H:%M:%S %Z');
+    if( my $pd = ParseDate($_[-1]) ) {
+        my $rfc822_date = UnixDate($pd, '%a, %d %b %Y %H:%M:%S %Z');
         return $this->pubDate($rfc822_date);
     }
 
@@ -59,7 +59,7 @@ sub date {
 sub header {
     my $this = shift;
 
-    &make_tags;
+    make_tags();
 
     return $this->SUPER::header("application/xml") . "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n";
 }
