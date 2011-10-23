@@ -7,6 +7,7 @@ use Date::Manip;
 use B::Deparse;
 
 our $VERSION = '0.9600';
+our $RFC822F = '%a, %d %b %Y %H:%M:%S %Z';
 
 BEGIN {
     # NOTE: there's voodoo in this block, don't judge me. :(
@@ -49,7 +50,7 @@ sub make_tags {
 sub date {
     my $this = shift;
     if( my $pd = ParseDate($_[-1]) ) {
-        my $rfc822_date = UnixDate($pd, '%a, %d %b %Y %H:%M:%S %Z');
+        my $rfc822_date = UnixDate($pd, $RFC822F);
         return $this->pubDate($rfc822_date);
     }
 
