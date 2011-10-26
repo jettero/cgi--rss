@@ -56,6 +56,21 @@ I had considered writing a CGI::RSS::_make_tag_func() that
 converts the ':' to a '_' in the function name...  That's harder
 than it sounds so I let it go for now.
 
+=head2 pubDate Format
+
+The pubDate field is parsed and forced into a standard format.  This format has
+caused problems for some people in the past.  The default format is
+“C<%a, %d %b %Y %H:%M:%S %Z>”.
+
+The format can be changed via accessor or via namespace variable.
+The following are all equivalent.
+
+  $CGI::RSS::pubDate_format = "%a, %d %b %Y %H:%M:%S %z";
+  $CGI::RSS->pubDate_format("%a, %d %b %Y %H:%M:%S %z");
+  $cgi->pubDate_format("%a, %d %b %Y %H:%M:%S %z");
+
+
+
 =head1 TODO
 
 I just wanted to get this thing working for now, but I'm not proud

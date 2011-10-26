@@ -7,7 +7,15 @@ use Date::Manip;
 use B::Deparse;
 
 our $VERSION = '0.9600';
-our $RFC822F = '%a, %d %b %Y %H:%M:%S %Z';
+our $pubDate_format = '%a, %d %b %Y %H:%M:%S %Z';
+
+sub pubDate_format {
+    my $class_or_instance = shift;
+    my $proposed = shift;
+
+    $pubDate_format = $proposed;
+    $pubDate_format
+}
 
 BEGIN {
     # NOTE: there's voodoo in this block, don't judge me. :(
@@ -49,9 +57,10 @@ sub make_tags {
 
 sub date {
     my $this = shift;
+
     if( my $pd = ParseDate($_[-1]) ) {
-        my $rfc822_date = UnixDate($pd, $RFC822F);
-        return $this->pubDate($rfc822_date);
+        my $date = UnixDate($pd, $pubDate_format);
+        return $this->pubDate($date);
     }
 
     $this->pubDate(@_);
