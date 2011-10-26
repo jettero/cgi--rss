@@ -19,7 +19,7 @@ if( eval "use WWW::Mechanize; 1;" ) {
         $rss->link        ( "http://url/url/"           ),
         $rss->guid        ( "http://url/url/?permalink" ),
         $rss->description ( "roflmao roflmao"           ),
-        $rss->date        ( "2008-03-22"                ),
+        $rss->date        ( scalar localtime            ),
     );
 
    $xml .= $rss->finish_rss;
