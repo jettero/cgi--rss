@@ -55,6 +55,8 @@ sub make_tags {
     $CGI::EXPORT{$_} = 1 for @TAGS;
 }
 
+sub import { make_tags() }
+
 sub date {
     my $this = shift;
 
@@ -68,8 +70,6 @@ sub date {
 
 sub header {
     my $this = shift;
-
-    make_tags();
 
     return $this->SUPER::header("application/xml") . "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n";
 }
