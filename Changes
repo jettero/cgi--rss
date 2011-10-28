@@ -1,3 +1,6 @@
+0.9652: Fri Oct 28 2011
+   - %Z only works in the states, doesn't validate anywhere else
+
 0.9651: Wed Oct 26 2011
    - minor change re: date formats, they're not configurable
    - fixed silly loading of CGI tags, import() vs header()

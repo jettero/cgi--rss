@@ -6,8 +6,8 @@ use base 'CGI';
 use Date::Manip;
 use B::Deparse;
 
-our $VERSION = '0.9651';
-our $pubDate_format = '%a, %d %b %Y %H:%M:%S %Z';
+our $VERSION = '0.9652';
+our $pubDate_format = '%a, %d %b %Y %H:%M:%S %z';
 
 sub pubDate_format {
     my $class_or_instance = shift;
