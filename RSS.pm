@@ -6,7 +6,7 @@ use base 'CGI';
 use Date::Manip;
 use B::Deparse;
 
-our $VERSION = '0.9652';
+our $VERSION = '0.9653';
 our $pubDate_format = '%a, %d %b %Y %H:%M:%S %z';
 
 sub pubDate_format {
@@ -55,7 +55,10 @@ sub make_tags {
     $CGI::EXPORT{$_} = 1 for @TAGS;
 }
 
-sub import { make_tags() }
+sub import {
+    make_tags();
+    *AUTOLOAD = \&CGI::AUTOLOAD;
+}
 
 sub date {
     my $this = shift;

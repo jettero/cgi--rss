@@ -1,3 +1,7 @@
+0.9653: Thu Nov 17 2011
+   - really minor fix so one can call (eg) CGI::RSS::start_rss()
+     as a non-method.  Requested by Austin Seraphin
+
 0.9652: Fri Oct 28 2011
    - %Z only works in the states, doesn't validate anywhere else
 
