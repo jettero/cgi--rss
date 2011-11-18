@@ -6,7 +6,7 @@ use base 'CGI';
 use Date::Manip;
 use B::Deparse;
 
-our $VERSION = '0.9653';
+our $VERSION = '0.9654';
 our $pubDate_format = '%a, %d %b %Y %H:%M:%S %z';
 
 sub pubDate_format {
@@ -17,47 +17,40 @@ sub pubDate_format {
     $pubDate_format
 }
 
+sub import {}
 BEGIN {
-    # NOTE: there's voodoo in this block, don't judge me. :(
+    my @TAGS = qw(
+        rss channel item
+
+        title link description
+
+        language copyright managingEditor webMaster pubDate lastBuildDate category generator docs
+        cloud ttl image rating textInput skipHours skipDays
+
+        link description author category comments enclosure guid pubDate source
+
+        pubDate url
+    );
+
+    $CGI::EXPORT{$_} = 1 for @TAGS;
+    *AUTOLOAD = \&CGI::AUTOLOAD;
+
+    # Instruct CGI.pm to *not* ruin the case of (eg) pubDate
+    # (NOTE: this is evil voodoow, don't judge me.)
 
     my $deparse = B::Deparse->new("-p", "-sC");
     my $deparsed = $deparse->coderef2text(\&CGI::_make_tag_func);
 
-    $deparsed =~ s/\\[LE]//g; # instruct CGI.pm to *not* ruin the case of (eg) pubDate
+    $deparsed =~ s/\\[LE]//g;
 
     my $sub = eval "sub $deparsed" or die $@;
-    do { no warnings 'redefine'; *CGI::_make_tag_func = $sub; }
-}
+    do { no warnings 'redefine'; *CGI::_make_tag_func = $sub; };
 
-BEGIN {
+
+    # Make sure we have a TZ
     unless( eval {Date_TimeZone(); 1} ) {
         $ENV{TZ} = "UTC" if $@ =~ m/unable to determine Time Zone/i;
     }
-}
-
-# TODO: this collection of tag names is hardly "correct" or complete
-our @TAGS = qw(
-    rss channel item
-
-    title link description
-
-    language copyright managingEditor webMaster pubDate lastBuildDate category generator docs
-    cloud ttl image rating textInput skipHours skipDays
-
-    link description author category comments enclosure guid pubDate source
-
-    pubDate url
-);
-
-1;
-
-sub make_tags {
-    $CGI::EXPORT{$_} = 1 for @TAGS;
-}
-
-sub import {
-    make_tags();
-    *AUTOLOAD = \&CGI::AUTOLOAD;
 }
 
 sub date {

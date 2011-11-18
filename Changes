@@ -1,3 +1,9 @@
+0.9654: Fri Nov 18 2011
+   - I cleaned up the compile-time/import-time code into one cute
+     little block of pure evil.  This has a side effect of fixing
+     a problem (bug?) where not calling import breaks the whole
+     module.
+
 0.9653: Thu Nov 17 2011
    - really minor fix so one can call (eg) CGI::RSS::start_rss()
      as a non-method.  Requested by Austin Seraphin
