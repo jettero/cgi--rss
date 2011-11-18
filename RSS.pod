@@ -7,7 +7,7 @@ CGI::RSS - provides a CGI-like interface for making rss feeds
     use strict;
     use CGI::RSS;
 
-    # NOTE: This doesn't work either way like CGI.pm, it's only OO...
+    # NOTE: RSS.pm does not export functions like CGI.pm. use OOP.
 
     my $rss = new CGI::RSS;
 
@@ -32,8 +32,8 @@ CGI::RSS - provides a CGI-like interface for making rss feeds
 
 =head2 RSS TAGS
 
-The following tags work anywhere.  There is no enforcement for
-where they belong.  They're just tag functions.
+The following tags work anywhere.  There is no enforcement for where they
+belong.  They're just tag functions.
 
     rss channel item title link description language copyright
     managingEditor webMaster pubDate lastBuildDate category
@@ -41,40 +41,10 @@ where they belong.  They're just tag functions.
     skipDays link description author category comments enclosure
     guid pubDate source date url
 
-=head2 MORE TAGS
-
-RSS.pm tricks CGI.pm into thinking the above tags are are valid
-html tags.  It does this at run time so you can add your own.
-
-    push @CGI::RSS::TAGS, "mytagname";
-
-The construction of CGI.pm's _make_tag_func() rule's out
-namespaces (e.g., push @CGI::RSS::TAGS, "myns:mytag"), if you
-have any suggestions on how to handle this, please let me know.
-
-I had considered writing a CGI::RSS::_make_tag_func() that
-converts the ':' to a '_' in the function name...  That's harder
-than it sounds so I let it go for now.
-
-=head2 pubDate Format
-
-The pubDate field is parsed and forced into a standard format.  This format has
-caused problems for some people in the past.  The default format is
-“C<%a, %d %b %Y %H:%M:%S %Z>”.
-
-The format can be changed via accessor or via namespace variable.
-The following are all equivalent.
-
-  $CGI::RSS::pubDate_format = "%a, %d %b %Y %H:%M:%S %z";
-  $CGI::RSS->pubDate_format("%a, %d %b %Y %H:%M:%S %z");
-  $cgi->pubDate_format("%a, %d %b %Y %H:%M:%S %z");
-
-
-
 =head1 TODO
 
-I just wanted to get this thing working for now, but I'm not proud
-of the module. In the future, I'd like to actually follow a standard.
+I just wanted to get this thing working for now, but I'm not proud of the
+module. In the future, I'd like to actually follow a standard.
 
  1. conform to standard(s) if possible
  2. deal with xmlns somehow
@@ -83,13 +53,13 @@ of the module. In the future, I'd like to actually follow a standard.
 
 Paul Miller C<< <jettero@cpan.org> >>
 
-I am using this software in my own projects...  If you find bugs, please
-please please let me know. :) Actually, let me know if you find it handy at
-all.  Half the fun of releasing this stuff is knowing that people use it.
+I am using this software in my own projects...  If you find bugs, please please
+please let me know. :) Actually, let me know if you find it handy at all.  Half
+the fun of releasing this stuff is knowing that people use it.
 
 =head1 COPYRIGHT
 
-Copyright (c) 2009 Paul Miller -- LGPL
+Copyright © 2011 Paul Miller — LGPL
 
 =head1 SEE ALSO
 
