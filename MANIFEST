@@ -9,5 +9,6 @@ t/01_load_them.t
 t/02_xmllint.t
 t/03_rss_validator.t
 t/04_date_format_switcher.t
-t/05_test_autoloads.t
 t/05_no_import.t
+t/05_test_autoloads.t
+t/05_test_cgi-fast.t
