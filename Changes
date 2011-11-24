@@ -1,3 +1,7 @@
+0.9655: Thu Nov 24 2011
+   - more import/export issues — this time while using CGI::Fast
+     https://rt.cpan.org/Ticket/Display.html?id=72662
+
 0.9654: Fri Nov 18 2011
    - I cleaned up the compile-time/import-time code into one cute
      little block of pure evil.  This has a side effect of fixing

@@ -20,7 +20,7 @@ if( eval q {use CGI::Fast; 1} ) {
         $cgi->begin_rss;
     };
 
-    if( $string =~ m/<rss>/ ) {
+    if( $string =~ m/<rss/ ) {
         ok(1);
 
     } else {

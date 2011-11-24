@@ -6,7 +6,7 @@ use base 'CGI';
 use Date::Manip;
 use B::Deparse;
 
-our $VERSION = '0.9654';
+our $VERSION = '0.9655';
 our $pubDate_format = '%a, %d %b %Y %H:%M:%S %z';
 
 sub pubDate_format {
@@ -46,10 +46,22 @@ BEGIN {
     my $sub = eval "sub $deparsed" or die $@;
     do { no warnings 'redefine'; *CGI::_make_tag_func = $sub; };
 
-
     # Make sure we have a TZ
     unless( eval {Date_TimeZone(); 1} ) {
         $ENV{TZ} = "UTC" if $@ =~ m/unable to determine Time Zone/i;
+    }
+
+    sub new {
+        my $class = shift;
+        my $this  = $class->SUPER::new(@_);
+
+        # XXX: this is probably how we should do this above too, but I have
+        # thoughts about CGI::RSS qw(begin_rss); begin_rss() …
+
+        CGI->_reset_globals();
+        $this->_setup_symbols(@TAGS);
+
+        return $this;
     }
 }
 
