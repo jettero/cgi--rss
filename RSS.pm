@@ -87,7 +87,7 @@ sub header {
         local $SIG{WARN} = sub{};
         my %opts = @_;
         $charset = $opts{'-charset'} || $opts{charset} || $charset;
-        $mime    = $opts{'-type'} || $opts{type} || $_[0] || $mime;
+        $mime    = $opts{'-type'} || $opts{type} || (@_==1 && $_[0]) || $mime;
     };
 
     return $this->SUPER::header(-type=>$mime, -charset=>$charset) . "<?xml version=\"1.0\" encoding=\"$charset\"?>\n\n";
