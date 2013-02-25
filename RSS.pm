@@ -6,7 +6,7 @@ use base 'CGI';
 use Date::Manip;
 use B::Deparse;
 
-our $VERSION = '0.9655';
+our $VERSION = '0.9657';
 our $pubDate_format = '%a, %d %b %Y %H:%M:%S %z';
 
 sub pubDate_format {
@@ -79,7 +79,18 @@ sub date {
 sub header {
     my $this = shift;
 
-    return $this->SUPER::header("application/xml") . "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n";
+    my $charset = "UTF-8";
+    my $mime    = "application/xml";
+
+    eval {
+        no warnings;
+        local $SIG{WARN} = sub{};
+        my %opts = @_;
+        $charset = $opts{'-charset'} || $opts{charset} || $charset;
+        $mime    = $opts{'-type'} || $opts{type} || $_[0] || $mime;
+    };
+
+    return $this->SUPER::header(-type=>$mime, -charset=>$charset) . "<?xml version=\"1.0\" encoding=\"$charset\"?>\n\n";
 }
 
 sub begin_rss {

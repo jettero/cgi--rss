@@ -1,3 +1,6 @@
+0.9657: Mon Feb 25 2013
+   - added a charset (utf8) to the cgi response
+
 0.9655: Thu Nov 24 2011
    - more import/export issues — this time while using CGI::Fast
      https://rt.cpan.org/Ticket/Display.html?id=72662
