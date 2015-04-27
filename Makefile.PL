@@ -15,6 +15,9 @@ WriteMakefile(
     'PREREQ_PM'     => {
         'Date::Manip' => 0,
         'B::Deparse'  => 0,
+
+        # not core anymore. :-(
+        CGI => 0,
     },
 
     ($ExtUtils::MakeMaker::VERSION ge '6.48'? 

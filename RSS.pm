@@ -6,7 +6,7 @@ use base 'CGI';
 use Date::Manip;
 use B::Deparse;
 
-our $VERSION = '0.9657';
+our $VERSION = '0.9658';
 our $pubDate_format = '%a, %d %b %Y %H:%M:%S %z';
 
 sub pubDate_format {

@@ -1,3 +1,6 @@
+0.9658: Mon Apr 27 2015
+   - https://rt.cpan.org/Public/Bug/Display.html?id=103981
+
 0.9657: Mon Feb 25 2013
    - added a charset (utf8) to the cgi response
 
