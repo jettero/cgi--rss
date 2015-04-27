@@ -2,12 +2,21 @@
 package CGI::RSS;
 
 use strict;
-use base 'CGI';
 use Date::Manip;
-use B::Deparse;
+use AutoLoader;
+use CGI;
+use Carp;
+use Scalar::Util qw(blessed);
+
+no warnings;
 
 our $VERSION = '0.9658';
 our $pubDate_format = '%a, %d %b %Y %H:%M:%S %z';
+
+# Make sure we have a TZ
+unless( eval {Date_TimeZone(); 1} ) {
+    $ENV{TZ} = "UTC" if $@ =~ m/unable to determine Time Zone/i;
+}
 
 sub pubDate_format {
     my $class_or_instance = shift;
@@ -17,52 +26,88 @@ sub pubDate_format {
     $pubDate_format
 }
 
-sub import {}
-BEGIN {
-    my @TAGS = qw(
-        rss channel item
+our @TAGS = qw(
+    rss channel item
 
-        title link description
+    title link description
 
-        language copyright managingEditor webMaster pubDate lastBuildDate category generator docs
-        cloud ttl image rating textInput skipHours skipDays
+    language copyright managingEditor webMaster pubDate lastBuildDate category generator docs
+    cloud ttl image rating textInput skipHours skipDays
 
-        link description author category comments enclosure guid pubDate source
+    link description author category comments enclosure guid pubDate source
 
-        pubDate url
-    );
+    pubDate url
+);
 
-    $CGI::EXPORT{$_} = 1 for @TAGS;
-    *AUTOLOAD = \&CGI::AUTOLOAD;
+setup_tag($_) for @TAGS;
 
-    # Instruct CGI.pm to *not* ruin the case of (eg) pubDate
-    # (NOTE: this is evil voodoow, don't judge me.)
+sub grok_args {
+    my $this  = blessed($_[0]) ? shift : __PACKAGE__->new;
+    my $attrs = ref($_[0]) eq "HASH" ? shift : undef;
 
-    my $deparse = B::Deparse->new("-p", "-sC");
-    my $deparsed = $deparse->coderef2text(\&CGI::_make_tag_func);
-
-    $deparsed =~ s/\\[LE]//g;
-
-    my $sub = eval "sub $deparsed" or die $@;
-    do { no warnings 'redefine'; *CGI::_make_tag_func = $sub; };
-
-    # Make sure we have a TZ
-    unless( eval {Date_TimeZone(); 1} ) {
-        $ENV{TZ} = "UTC" if $@ =~ m/unable to determine Time Zone/i;
+    if( ref($_[0]) eq "ARRAY" ) {
+        return ($this,$attrs,undef,$_[0]);
     }
 
-    sub new {
-        my $class = shift;
-        my $this  = $class->SUPER::new(@_);
+    return ($this,$attrs,join(" ", @_),undef);
+}
 
-        # XXX: this is probably how we should do this above too, but I have
-        # thoughts about CGI::RSS qw(begin_rss); begin_rss() …
+sub setup_tag {
+    my $tag = shift;
 
-        CGI->_reset_globals();
-        $this->_setup_symbols(@TAGS);
+    # try to mimick CGI.pm (which is very unfriendly about new tags now)
 
-        return $this;
+    no strict 'refs';
+
+    *{ __PACKAGE__ . "::$tag" } = sub {
+        my ($this, $attrs, $contents, $subs) = grok_args(@_);
+        my $res;
+
+        if( $subs ) {
+            $res = join("", map { $this->$tag( ($attrs ? $attrs : ()), $_ ) } @$subs );
+
+        } else {
+            $res = "<$tag";
+
+            if( $attrs ) {
+                for(values %$attrs) {
+                    # XXX: this is a terrible way to do this, better than nothing for now
+                    s/(?<!\\)"/\\"/g;
+                }
+
+                $res .= " " . join(" ", map {"$_=\"$attrs->{$_}\""} keys %$attrs);
+            }
+
+            $res .= ">$contents</$tag>";
+        }
+
+        return $res;
     }
+}
+
+sub AUTOLOAD {
+    my $this = shift;
+    our $AUTOLOAD;
+
+    if( my ($fname) = $AUTOLOAD =~ m/::([^:]+)$/ ) {
+        if( CGI->can($fname) ) {
+            *{ __PACKAGE__ . "::$fname" } = sub {
+                my $this = shift;
+                return CGI->$fname(@_);
+            }
+        }
+
+        else {
+            croak "can't figure out what to do with $fname() call";
+        }
+    }
+}
+
+sub new {
+    my $class = shift;
+    my $this = bless {}, $class;
+
+    return $this;
 }
 
 sub date {
@@ -90,7 +135,7 @@ sub header {
         $mime    = $opts{'-type'} || $opts{type} || (@_==1 && $_[0]) || $mime;
     };
 
-    return $this->SUPER::header(-type=>$mime, -charset=>$charset) . "<?xml version=\"1.0\" encoding=\"$charset\"?>\n\n";
+    return CGI::header(-type=>$mime, -charset=>$charset) . "<?xml version=\"1.0\" encoding=\"$charset\"?>\n\n";
 }
 
 sub begin_rss {
@@ -118,3 +163,5 @@ sub finish_rss {
 }
 
 "This file is true."
+
+__END__

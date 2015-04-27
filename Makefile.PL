@@ -14,9 +14,6 @@ WriteMakefile(
     VERSION_FROM => 'RSS.pm',
     'PREREQ_PM'     => {
         'Date::Manip' => 0,
-        'B::Deparse'  => 0,
-
-        # not core anymore. :-(
         CGI => 0,
     },
 

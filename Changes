@@ -1,5 +1,9 @@
 0.9658: Mon Apr 27 2015
    - https://rt.cpan.org/Public/Bug/Display.html?id=103981
+   - additionally, the new CPAN version cannot be (easily) hacked upon to
+     produce non HTML tags. So I made a pseudo-CGI.pm argument parser.
+     I'm assuming it's not nearly as good, but I don't think there's any
+     users of this module either.
 
 0.9657: Mon Feb 25 2013
    - added a charset (utf8) to the cgi response
