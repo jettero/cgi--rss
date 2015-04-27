@@ -82,7 +82,25 @@ sub setup_tag {
         }
 
         return $res;
-    }
+    };
+
+    *{ __PACKAGE__ . "::start_$tag" } = sub {
+        my ($this, $attrs) = grok_args(@_);
+        my $res = "<$tag";
+
+        if( $attrs ) {
+            for(values %$attrs) {
+                # XXX: this is a terrible way to do this, better than nothing for now
+                s/(?<!\\)"/\\"/g;
+            }
+
+            $res .= " " . join(" ", map {"$_=\"$attrs->{$_}\""} keys %$attrs);
+        }
+
+        return $res . ">";
+    };
+
+    *{ __PACKAGE__ . "::end_$tag" } = sub { "</$tag>" };
 }
 
 sub AUTOLOAD {
