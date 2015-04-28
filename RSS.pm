@@ -7,10 +7,12 @@ use AutoLoader;
 use CGI;
 use Carp;
 use Scalar::Util qw(blessed);
+use base 'Exporter';
+use vars qw'@TAGS @EXPORT_OK %EXPORT_TAGS';
 
 no warnings;
 
-our $VERSION = '0.9658';
+our $VERSION = '0.9659';
 our $pubDate_format = '%a, %d %b %Y %H:%M:%S %z';
 
 # Make sure we have a TZ
@@ -25,21 +27,6 @@ sub pubDate_format {
     $pubDate_format = $proposed;
     $pubDate_format
 }
-
-our @TAGS = qw(
-    rss channel item
-
-    title link description
-
-    language copyright managingEditor webMaster pubDate lastBuildDate category generator docs
-    cloud ttl image rating textInput skipHours skipDays
-
-    link description author category comments enclosure guid pubDate source
-
-    pubDate url
-);
-
-setup_tag($_) for @TAGS;
 
 sub grok_args {
     my $this  = blessed($_[0]) ? shift : __PACKAGE__->new;
@@ -58,6 +45,12 @@ sub setup_tag {
     # try to mimick CGI.pm (which is very unfriendly about new tags now)
 
     no strict 'refs';
+
+    my @these_tags = ($tag, "start_$tag", "end_$tag");
+
+    push @EXPORT_OK, @these_tags;
+    push @{ $EXPORT_TAGS{all}  }, @these_tags;
+    push @{ $EXPORT_TAGS{tags} }, $tag;
 
     *{ __PACKAGE__ . "::$tag" } = sub {
         my ($this, $attrs, $contents, $subs) = grok_args(@_);
@@ -180,6 +173,23 @@ sub finish_rss {
     return $this->end_channel . $this->end_rss;
 }
 
-"This file is true."
+BEGIN {
+    @TAGS = qw(
+        rss channel item
+
+        title link description
+
+        language copyright managingEditor webMaster pubDate lastBuildDate category generator docs
+        cloud ttl image rating textInput skipHours skipDays
+
+        link description author category comments enclosure guid pubDate source
+
+        pubDate url
+    );
+
+    setup_tag($_) for @TAGS;
+}
+
+1;
 
 __END__

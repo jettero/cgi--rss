@@ -28,5 +28,5 @@ if( eval q {use CGI::Fast; 1} ) {
     }
 
 } else {
-    print "ok $_ # no CGI::Fast, no test\n" for 1 .. $tests;
+    ok(1);
 }

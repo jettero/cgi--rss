@@ -5,9 +5,7 @@ use Test;
 use CGI::RSS ();
 use Date::Manip;
 
-plan tests => 2;
+plan tests => 4;
 
-my $rss = new CGI::RSS;
-
-ok( eval { CGI::RSS::start_rss(); 17 }, 17 );
-ok( $@, "" );
+ok( eval {           rss("blah") }, undef             ); ok( not not $@ );
+ok( eval { CGI::RSS::rss("blah") }, "<rss>blah</rss>" ); ok(     not $@ );
