@@ -12,7 +12,7 @@ use vars qw'@TAGS @EXPORT_OK %EXPORT_TAGS';
 
 no warnings;
 
-our $VERSION = '0.9659';
+our $VERSION = '0.9660';
 our $pubDate_format = '%a, %d %b %Y %H:%M:%S %z';
 
 # Make sure we have a TZ

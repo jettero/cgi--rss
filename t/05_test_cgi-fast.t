@@ -10,7 +10,7 @@ plan tests => my $tests = 1;
 # https://rt.cpan.org/Ticket/Display.html?id=72662
 # perl -e 'use CGI::Fast ;use CGI::RSS; new CGI::Fast; my $r = new CGI::RSS; print $r->header, $r->begin_rss;' 
 
-if( eval q {use CGI::Fast; 1} ) {
+if( eval q {use FCGI; use CGI::Fast; FCGI->can('accept') and CGI::Fast->can('new') } ) {
 
     CGI::Fast->new;
 

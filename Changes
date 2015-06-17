@@ -1,3 +1,6 @@
+0.9660: Wed Jun 17 2015
+   - maybe make t/05_test_cgi-fast.t stop failing
+
 0.9659: Tue Apr 28 2015
    - still a bunch of cpan tester problems, particularly with the (somewhat
      pointless) CGI::Fast test
