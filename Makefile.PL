@@ -22,7 +22,7 @@ WriteMakefile(
             META_MERGE => {
                 keywords => ['cgi', 'rss'],
                 resources=> {
-                    repository => 'http://github.com/jettero/cgi--rss/tree',
+                    repository => 'http://github.com/jettero/cgi--rss',
                 },
             },
 
